@@ -9,6 +9,9 @@ import { ToastContainer } from "react-toastify";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const theme = createTheme({
+  typography: {
+    fontFamily: `'Poppins', sans-serif`,
+  },
   palette: {
     mode: "light",
     primary: {
