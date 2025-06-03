@@ -262,7 +262,7 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
               mx: 1,
               my: 0.5,
             }}
-            onClick={() => handleMenuItemClick("Settings")}
+            onClick={() => handleMenuItemClick("Logout")}
           >
             <ListItemIcon
               sx={{
