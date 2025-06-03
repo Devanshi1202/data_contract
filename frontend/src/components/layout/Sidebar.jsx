@@ -242,7 +242,7 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
           <ListItemButton
             sx={{
               backgroundColor:
-                selectedItem === "Settings" ? "#F7EAFF" : "transparent",
+                selectedItem === "Logout" ? "#F7EAFF" : "transparent",
               "&:hover": {
                 backgroundColor: "#F7EAFF",
               },
