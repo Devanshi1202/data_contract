@@ -1,0 +1,13 @@
+<svg width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line y1="204.5" x2="1440" y2="204.5" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line y1="409.5" x2="1440" y2="409.5" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line y1="614.5" x2="1440" y2="614.5" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line y1="819.5" x2="1440" y2="819.5" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line x1="207.5" y1="1.81625e-08" x2="207.5" y2="1024" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line x1="412.5" y1="1.81496e-08" x2="412.5" y2="1024" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line x1="618.5" y1="1.81244e-08" x2="618.5" y2="1024" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line x1="823.5" y1="1.81117e-08" x2="823.5" y2="1024" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line x1="1029.5" y1="1.81117e-08" x2="1029.5" y2="1024" stroke="#9D00FF" stroke-opacity="0.24"/>
+<line x1="1234.5" y1="1.81117e-08" x2="1234.5" y2="1024" stroke="#9D00FF" stroke-opacity="0.24"/>
+<ellipse cx="702" cy="515.5" rx="475" ry="414.5" fill="white"/>
+</svg>

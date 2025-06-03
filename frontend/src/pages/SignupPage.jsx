@@ -11,6 +11,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 // import GitHubIcon from '@mui/icons-material/GitHub';
 // import GoogleIcon from '@mui/icons-material/Google';
+import bg from "../assets/svg/Background.svg";
 
 const getPasswordStrength = (password) => {
   let score = 0;
@@ -47,6 +48,10 @@ const SignUpPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        backgroundImage: `url(${bg})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <Box
