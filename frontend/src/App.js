@@ -1,12 +1,18 @@
 // App.js
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ClerkProvider } from "@clerk/clerk-react";
 // import Layout from "./components/layout/MainLayout";
 // import Dashboard from "./pages/Dashboard/dashboard";
 import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LogInPage";
+import OtpPage from "./pages/OtpPage";
+
+const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 function App() {
   return (
+    <ClerkProvider publishableKey={clerkPubKey}>
     <BrowserRouter>
       <Routes>
         {/* <Route
@@ -53,10 +59,13 @@ function App() {
         {/* <Route path="*" element={<LoginPage />} /> */}
         {/* <Route path="/login" element={<LoginPage />} /> */}
         <Route path="/sign-up" element={<SignupPage />} />
+        <Route path="/confirm" element={<OtpPage />} />
+        <Route path="/login" element={<LoginPage />} />
         {/* <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} /> */}
       </Routes>
     </BrowserRouter>
+    </ClerkProvider>
   );
 }
 

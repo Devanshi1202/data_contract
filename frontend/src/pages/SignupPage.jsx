@@ -6,40 +6,44 @@ import {
   Button,
   IconButton,
   InputAdornment,
-  LinearProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-// import GitHubIcon from '@mui/icons-material/GitHub';
-// import GoogleIcon from '@mui/icons-material/Google';
+import { useSignUp } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 import bg from "../assets/svg/Background.svg";
 
-const getPasswordStrength = (password) => {
-  let score = 0;
-  if (!password)
-    return { score: 0, label: "Weak", percentage: 0, color: "#f44336" };
-  if (password.length >= 8) score += 1;
-  if (/[A-Z]/.test(password)) score += 1;
-  if (/[0-9]/.test(password)) score += 1;
-  if (/[^A-Za-z0-9]/.test(password)) score += 1;
-
-  const labels = ["Weak", "Fair", "Good", "Strong", "Very Strong"];
-  const colors = ["#f44336", "#ff9800", "#ffc107", "#2196f3", "#4caf50"];
-
-  return {
-    score,
-    label: labels[score],
-    color: colors[score],
-    percentage: (score / 4) * 100,
-  };
-};
-
 const SignUpPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const toggleVisibility = () => setShowPassword((prev) => !prev);
+  const { signUp } = useSignUp();
+  const navigate = useNavigate();
 
-  const strength = getPasswordStrength(password);
+  const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    try {
+      await signUp.create({
+        emailAddress,
+        password,
+        firstName: name,
+      });
+
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
+      // Navigate to /confirm
+      navigate("/confirm");
+    } catch (err) {
+      console.error(err);
+      alert(err?.errors?.[0]?.message || "Sign up failed.");
+    }
+  };
 
   return (
     <Box
@@ -51,7 +55,6 @@ const SignUpPage = () => {
         backgroundImage: `url(${bg})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
       <Box
@@ -64,8 +67,6 @@ const SignUpPage = () => {
           boxShadow: "inset 0 0 15px rgba(180, 81, 255, 0.55)",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          mx: "auto",
         }}
       >
         <Typography variant="h5" fontWeight="bold" gutterBottom>
@@ -73,43 +74,32 @@ const SignUpPage = () => {
         </Typography>
 
         <TextField
-          fullWidth
           label="Name"
-          placeholder="Enter your name"
+          fullWidth
           margin="normal"
-          variant="outlined"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <TextField
-          fullWidth
-          label="Organization Name"
-          placeholder=""
-          margin="normal"
-          variant="outlined"
-        />
-
-        <TextField
-          fullWidth
           label="Email Address"
-          placeholder="Enter your email address"
+          fullWidth
           margin="normal"
-          variant="outlined"
+          value={emailAddress}
+          onChange={(e) => setEmailAddress(e.target.value)}
         />
 
-        {/* Password Field */}
         <TextField
-          fullWidth
           label="Password"
           type={showPassword ? "text" : "password"}
-          placeholder="Create your password"
+          fullWidth
           margin="normal"
-          variant="outlined"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={toggleVisibility} edge="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
@@ -117,39 +107,17 @@ const SignUpPage = () => {
           }}
         />
 
-        {/* Password Strength Indicator */}
-        {password && (
-          <Box sx={{ width: "100%", mt: 1 }}>
-            <LinearProgress
-              variant="determinate"
-              value={strength.percentage}
-              sx={{
-                height: 8,
-                borderRadius: 5,
-                backgroundColor: "#eee",
-                "& .MuiLinearProgress-bar": {
-                  backgroundColor: strength.color,
-                },
-              }}
-            />
-            <Typography variant="body2" sx={{ mt: 0.5, color: strength.color }}>
-              {strength.label}
-            </Typography>
-          </Box>
-        )}
-
-        {/* Confirm Password */}
         <TextField
-          fullWidth
           label="Confirm Password"
           type={showPassword ? "text" : "password"}
-          placeholder="Enter confirm password"
+          fullWidth
           margin="normal"
-          variant="outlined"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={toggleVisibility} edge="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
@@ -157,9 +125,8 @@ const SignUpPage = () => {
           }}
         />
 
-        {/* Submit Button */}
         <Button
-          fullWidth
+          variant="contained"
           sx={{
             mt: 3,
             py: 1.5,
@@ -168,24 +135,12 @@ const SignUpPage = () => {
             fontWeight: "bold",
             borderRadius: 99,
             boxShadow: "0 5px 20px rgba(157, 0, 255, 0.5)",
-            "&:hover": {
-              backgroundColor: "#8500d6",
-            },
+            "&:hover": { backgroundColor: "#8500d6" },
           }}
+          onClick={handleSignUp}
         >
-          Create an account
+          Create Account
         </Button>
-
-        {/* Login Text */}
-        <Typography mt={2} variant="body2">
-          Already have an account?{" "}
-          <Typography
-            component="span"
-            sx={{ color: "#7b1fa2", cursor: "pointer", fontWeight: 500 }}
-          >
-            Login
-          </Typography>
-        </Typography>
       </Box>
     </Box>
   );
