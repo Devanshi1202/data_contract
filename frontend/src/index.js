@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const theme = createTheme({
   palette: {
-    mode: "light", 
+    mode: "light",
     primary: {
       main: "#9D00FF",
     },
@@ -23,14 +23,15 @@ root.render(
     <GlobalStyles
       styles={{
         "*": {
-          fontFamily: `'DM Sans', sans-serif`,
+          fontFamily: `'Poppins', sans-serif`,
         },
         body: {
           margin: 0,
-          fontFamily: `'DM Sans', sans-serif`,
+          fontFamily: `'Poppins', sans-serif`,
         },
       }}
     />
+
     <ToastContainer />
     <App />
   </ThemeProvider>
