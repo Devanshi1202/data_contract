@@ -11,7 +11,6 @@ import {
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import AutoLogout from "./AutoLogout";
 
 const Layout = () => {
   const theme = useTheme();
@@ -57,7 +56,7 @@ const Layout = () => {
         mobileOpen={mobileOpen}
         onDrawerToggle={handleDrawerToggle}
       />
-      <AutoLogout />
+      {/* <AutoLogout /> */}
 
       {/* Main Content */}
       <Box
