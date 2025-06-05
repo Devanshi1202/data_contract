@@ -8,6 +8,8 @@ import {
 import { useSignUp } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import bg from "../assets/svg/Background.svg";
+import { useSignUp } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -90,7 +92,10 @@ const OtpPage = () => {
               inputRef={(el) => (inputsRef.current[index] = el)}
               value={digit}
               onChange={(e) => handleChange(e.target.value.slice(0, 1), index)}
-              inputProps={{ maxLength: 1, style: { textAlign: "center", fontSize: "20px" } }}
+              inputProps={{
+                maxLength: 1,
+                style: { textAlign: "center", fontSize: "20px" },
+              }}
               sx={{
                 width: 55,
                 "& .MuiOutlinedInput-root": {
