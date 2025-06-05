@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useSignUp } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bg from "../assets/svg/Background.svg";
 
 const SignUpPage = () => {
@@ -32,7 +32,7 @@ const SignUpPage = () => {
       await signUp.create({
         emailAddress,
         password,
-        firstName: name,
+        username: name,
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
@@ -67,6 +67,7 @@ const SignUpPage = () => {
           boxShadow: "inset 0 0 15px rgba(180, 81, 255, 0.55)",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Typography variant="h5" fontWeight="bold" gutterBottom>
@@ -100,7 +101,7 @@ const SignUpPage = () => {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             ),
@@ -118,7 +119,7 @@ const SignUpPage = () => {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             ),
@@ -137,10 +138,23 @@ const SignUpPage = () => {
             boxShadow: "0 5px 20px rgba(157, 0, 255, 0.5)",
             "&:hover": { backgroundColor: "#8500d6" },
           }}
+          fullWidth
           onClick={handleSignUp}
         >
           Create Account
         </Button>
+
+        <Typography mt={2} variant="body2">
+          Already have an account?{" "}
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <Typography
+              component="span"
+              sx={{ color: "#7b1fa2", cursor: "pointer", fontWeight: 500 }}
+            >
+              Login
+            </Typography>
+          </Link>
+        </Typography>
       </Box>
     </Box>
   );

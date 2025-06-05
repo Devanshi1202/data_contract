@@ -15,6 +15,7 @@ import { ReactComponent as DataContractLogo } from "../../assets/svg/DataContrac
 import { ReactComponent as ProducerLogo } from "../../assets/svg/producer.svg";
 import { ReactComponent as ConsumerLogo } from "../../assets/svg/consumer.svg";
 import { ReactComponent as Logout } from "../../assets/svg/export.svg";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 const drawerWidth = 280;
 
@@ -22,6 +23,8 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
   const [selectedItem, setSelectedItem] = useState("Producer Contract");
   const navigate = useNavigate(); // Use useNavigate hook
   const location = useLocation();
+  const { signOut } = useAuth();
+  const { user } = useUser();
 
   const menuToRouteMap = {
     "Producer Contract": "/producer-contract",
@@ -116,9 +119,10 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
               {/* {userInfo?.name.charAt(0).toUpperCase()} */}
             </Avatar>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography fontWeight="500">Hello, 
+              <Typography fontWeight="500">
+                Hello, {user.username}
                 {/* {userInfo?.name} */}
-                </Typography>
+              </Typography>
             </Box>
           </Box>
         </Box>
@@ -262,7 +266,11 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
               mx: 1,
               my: 0.5,
             }}
-            onClick={() => handleMenuItemClick("Logout")}
+            onClick={() => {
+              signOut(() => {
+                window.location.href = "/login"; 
+              });
+            }}
           >
             <ListItemIcon
               sx={{

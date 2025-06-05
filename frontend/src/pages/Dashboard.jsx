@@ -1,6 +1,14 @@
+import { useUser } from "@clerk/clerk-react";
 import { Box, Typography } from "@mui/material";
 
 const Dashboard = () => {
+  const { user, isLoaded } = useUser();
+
+  if (!isLoaded) return <div>Loading...</div>;
+
+  console.log(user,"user");
+  
+
   return (
     <Box
       sx={{
@@ -10,7 +18,7 @@ const Dashboard = () => {
         justifyContent: "center",
       }}
     >
-        <Typography variant="h5">Hello, Good Morning! Pari Thanki</Typography>
+      <Typography variant="h5">Hello,{user.username}!</Typography>
     </Box>
   );
 };

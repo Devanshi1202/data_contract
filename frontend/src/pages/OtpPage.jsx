@@ -1,15 +1,14 @@
 import React, { useState, useRef } from "react";
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Box, Typography, TextField, Button } from "@mui/material";
 import bg from "../assets/svg/Background.svg";
+import { useSignUp } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputsRef = useRef([]);
+  const { signUp, setActive } = useSignUp();
+  const navigate = useNavigate();
 
   const handleChange = (value, index) => {
     const newOtp = [...otp];
@@ -21,11 +20,23 @@ const OtpPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const otpCode = otp.join("");
-    console.log("Submitted OTP:", otpCode);
-    // Handle verification
+    const otpCode = otp.join(""); 
+    try {
+      const result = await signUp.attemptEmailAddressVerification({
+        code: otpCode,
+      });
+      if (result.status === "complete") {
+        await setActive({ session: signUp.createdSessionId });
+        navigate("/dashboard");
+        console.log("✅ User signed up and logged in!");
+      } else {
+        console.warn("⚠️ Verification not complete:", result);
+      }
+    } catch (err) {
+      console.error("❌ Error verifying code:", err.errors);
+    }
   };
 
   return (
@@ -66,7 +77,10 @@ const OtpPage = () => {
               inputRef={(el) => (inputsRef.current[index] = el)}
               value={digit}
               onChange={(e) => handleChange(e.target.value.slice(0, 1), index)}
-              inputProps={{ maxLength: 1, style: { textAlign: "center", fontSize: "20px" } }}
+              inputProps={{
+                maxLength: 1,
+                style: { textAlign: "center", fontSize: "20px" },
+              }}
               sx={{
                 width: 55,
                 "& .MuiOutlinedInput-root": {
