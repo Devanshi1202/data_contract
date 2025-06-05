@@ -8,8 +8,6 @@ import {
 import { useSignUp } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import bg from "../assets/svg/Background.svg";
-import { useSignUp } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
