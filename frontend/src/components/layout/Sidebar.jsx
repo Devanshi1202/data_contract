@@ -64,6 +64,15 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      window.location.href = "/login";
+    } catch (error) {
+      alert("error in signout", error);
+    }
+  };
+
   // const getInitial = (name) => {
   //   return name ? name.charAt(0).toUpperCase() : "";
   // };
@@ -120,7 +129,7 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
             </Avatar>
             <Box sx={{ flexGrow: 1 }}>
               <Typography fontWeight="500">
-                Hello, {user.username}
+                Hello, {user?.username}
                 {/* {userInfo?.name} */}
               </Typography>
             </Box>
@@ -266,11 +275,7 @@ const Sidebar = ({ isMobile, mobileOpen, onDrawerToggle }) => {
               mx: 1,
               my: 0.5,
             }}
-            onClick={() => {
-              signOut(() => {
-                window.location.href = "/login"; 
-              });
-            }}
+            onClick={handleLogout}
           >
             <ListItemIcon
               sx={{
