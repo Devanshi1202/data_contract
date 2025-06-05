@@ -19,10 +19,12 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { signUp } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
+    if (!isLoaded) return;
+
     if (password !== confirmPassword) {
       alert("Passwords do not match.");
       return;
@@ -37,13 +39,17 @@ const SignUpPage = () => {
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
 
-      // Navigate to /confirm
       navigate("/confirm");
     } catch (err) {
-      console.error(err);
-      alert(err?.errors?.[0]?.message || "Sign up failed.");
+      console.error("Signup Error:", err);
+      if (err.errors && err.errors.length > 0) {
+        alert(err.errors[0].message);
+      } else {
+        alert("An unexpected error occurred during sign-up.");
+      }
     }
   };
+
 
   return (
     <Box

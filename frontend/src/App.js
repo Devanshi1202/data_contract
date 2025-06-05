@@ -1,4 +1,3 @@
-// App.js
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
@@ -7,6 +6,10 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LogInPage";
 import OtpPage from "./pages/OtpPage";
+import ProducerContract from "./pages/ProducerContract";
+import ConsumerContract from "./pages/ConsumerContract";
+import Dashboard from "./pages/Dashboard";
+import Layout from "./components/layout/MainLayout"; 
 
 const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 

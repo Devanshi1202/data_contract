@@ -5,11 +5,16 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import { useSignUp } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 import bg from "../assets/svg/Background.svg";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputsRef = useRef([]);
+  const { signUp, setActive } = useSignUp();
+  const { isLoaded } = useSignUp();
+  const navigate = useNavigate();
 
   const handleChange = (value, index) => {
     const newOtp = [...otp];
@@ -21,12 +26,31 @@ const OtpPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isLoaded) return;
+
     const otpCode = otp.join("");
-    console.log("Submitted OTP:", otpCode);
-    // Handle verification
+
+    try {
+      await signUp.attemptEmailAddressVerification({ code: otpCode });
+
+      if (signUp.status === "complete") {
+        await setActive({ session: signUp.createdSessionId });
+        navigate("/dashboard");
+      } else {
+        alert("OTP verification incomplete.");
+      }
+    } catch (err) {
+      console.error("OTP Verification Error:", err);
+      if (err.errors && err.errors.length > 0) {
+        alert(err.errors[0].message);
+      } else {
+        alert("An unexpected error occurred during OTP verification.");
+      }
+    }
   };
+
 
   return (
     <Box
