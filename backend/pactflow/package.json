@@ -1,0 +1,10 @@
+{
+  "name": "pactflow-agent",
+  "scripts": {
+    "publish": "pactflow publish --contract=../contracts/consumer/user_created_contract.json --participant=$CONSUMER_NAME --version=$CONTRACT_VERSION",
+    "verify": "pactflow verify --provider=$PROVIDER_NAME --provider-base-url=http://localhost:8000"
+  },
+  "devDependencies": {
+    "@pactflow/cli": "^0.5.0"
+  }
+}

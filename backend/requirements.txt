@@ -1,5 +1,7 @@
 fastapi
 uvicorn
 sqlalchemy
-pydantic
-pymysql
+mysql-connector-python
+pact-python
+pytest
+requests
